@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Rock, Paper, Scissors!</title>
+    <style>
+      .top-banner {
+        padding: 15px;
+        background-color: black;
+        color: white;
+        margin-bottom: 20px;
+      }
+      .rps-btn {
+        width: 120px;
+        height: 120px;
+        background-color: red;
+        display: inline-block;
+      }
+      #chat-text {
+        margin: 5px;
+        padding: 5px;
+        height: 200px;
+        border: 1px solid #cfcfcf;
+      }
+      #player-name {
+        margin: 5px;
+        display: inline-block;
+        color: #333333;
+      }
+      #chat-msg {
+        margin: 5px;
+        display: inline-block;
+      }
+      #play-btn {
+        margin: 0px;
+        background-color: #cf2255;
+        color: #ffffff;
+        border-radius: 3px;
+        border: none;
+      }
+      #send-btn {
+        margin: 0px;
+        background-color: #5577cf;
+        color: #ffffff;
+        border-radius: 3px;
+        border: none;
+      }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="top-banner">
+            <h1 class="text-center" style="font-size: 48px;">Rock, Paper Scissors!</h1>
+            <form>
+              <div class="form-group" style="text-align: center;">
+                <strong>Player Name:</strong> <input id="player-name" type="text" style="width: 200px;">
+                <button id="play-btn" style="width: 60px;">Play!</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title"><strong>Game</strong></h3>
+            </div>
+            <div class="panel-body">
+              <div style="width: 35%; display: inline-block; vertical-align: top;">
+                <strong>Wins:</strong> <div id="score-wins"></div>
+                <strong>Losses:</strong> <div id="score-losses"></div>
+                <strong>Ties:</strong> <div id="score-ties"></div>
+              </div>
+              <div style="width: 60%; display: inline-block; text-align: center;">
+                <div class="rps-btn" id="rps-btn-1"></div>
+                <div class="rps-btn" id="rps-btn-2"></div>
+                <div class="rps-btn" id="rps-btn-3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title"><strong>Chat</strong></h3>
+            </div>
+            <div class="panel-body">
+              <div id="chat-text">
+                chatbox
+              </div>
+              <form>
+                <div class="form-group">
+                  <input id="chat-msg" type="text" style="width: 85%;">
+                  <button id="send-btn" style="width: 12%;">Send</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <script src="game.js"></script>
+  </body>
+</html>
