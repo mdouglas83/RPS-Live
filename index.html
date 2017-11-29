@@ -23,6 +23,7 @@
         padding: 5px;
         height: 200px;
         border: 1px solid #cfcfcf;
+        overflow: scroll;
       }
       #player-name {
         margin: 5px;
@@ -79,9 +80,11 @@
             </div>
             <div class="panel-body">
               <div style="width: 35%; display: inline-block; vertical-align: top;">
-                <strong>Wins:</strong> <div id="score-wins"></div>
-                <strong>Losses:</strong> <div id="score-losses"></div>
-                <strong>Ties:</strong> <div id="score-ties"></div>
+                <div id="player"><strong>Player:</strong> n/a</div>
+                <div id="opponent"><strong>Opponent:</strong> n/a</div>
+                <div id="score-wins"><strong>Wins:</strong> 0</div>
+                <div id="score-losses"><strong>Losses:</strong> 0</div>
+                <div id="score-ties"><strong>Ties:</strong> 0</div>
               </div>
               <div style="width: 60%; display: inline-block; text-align: center;">
                 <div class="rps-btn" id="rps-btn-1"></div>
@@ -100,9 +103,7 @@
               <h3 class="panel-title"><strong>Chat</strong></h3>
             </div>
             <div class="panel-body">
-              <div id="chat-text">
-                chatbox
-              </div>
+              <div id="chat-text"></div>
               <form>
                 <div class="form-group">
                   <input id="chat-msg" type="text" style="width: 85%;">

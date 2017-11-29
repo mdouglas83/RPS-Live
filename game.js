@@ -13,7 +13,6 @@ var database = firebase.database();
 var id = -1;
 var player = [];
 var score = [];
-var chatmsg = "";
 
 for (i = 0; i <= 1; i++){
     player.push("");
@@ -33,17 +32,48 @@ $("#play-btn").on("click", function(event) {
     database.ref().update({
         add: $("#player-name").val().trim()
     });
-    /*database.ref().set({
-        add: $("#player-name").val().trim(),
-        player: player,
-        score: score,
-        chatmsg: chatmsg
-    });*/
+});
+
+$("#send-btn").on("click", function(event) {
+    event.preventDefault();
+    if (!(id == -1)) {
+        var chatrec = [true, true];
+        database.ref().update({
+            chatmsg: player[id] + ": " + $("#chat-msg").val().trim(),
+            chatrec: chatrec
+        });
+    }
 });
 
 database.ref().on("value", function(snapshot) {
-    console.log("value");
     player = snapshot.val().player;
+    if (!(id == -1)) {
+        if (!player[Math.abs(id - 1)] == "") {
+            document.getElementById("opponent").innerHTML = '<strong>Opponent:</strong> ' + player[Math.abs(id - 1)];
+        }
+
+        if (!score == snapshot.val().score) {
+            $("#score-wins").text('<strong>Wins:</strong> ' + snapshot.val().score[id][0]);
+            $("#score-losses").text('<strong>Losses:</strong> ' + snapshot.val().score[id][1]);
+            $("#score-ties").text('<strong>Ties:</strong> ' + snapshot.val().score[id][2]);
+        }
+        if (!snapshot.val().chatmsg == "") {
+            var chatrec = snapshot.val().chatrec;
+            if (chatrec[id] == true) {
+                if (chatrec[0] == false && chatrec[1] == false) {
+                    database.ref().update({chatrec: chatrec, chatmsg: ""});
+                } else {
+                    database.ref().update({chatrec: chatrec});
+                }
+                var chatDiv = document.getElementById("chat-text");
+                var newP = document.createElement('p');
+                newP.innerHTML = snapshot.val().chatmsg;
+                chatDiv.appendChild(newP);
+                chatDiv.scrollTop = chatDiv.scrollHeight;
+                chatrec[id] = false;
+            }
+        }
+    }
     if (!snapshot.val().add == "") {
         if (snapshot.val().add == $("#player-name").val().trim()) {
             if (id == -1) {
@@ -54,37 +84,13 @@ database.ref().on("value", function(snapshot) {
                 }
             }
             player[id] = $("#player-name").val().trim();
+            document.getElementById("player").innerHTML = '<strong>Player:</strong> ' + player[id];
             database.ref().update({
                 add: "",
                 player: player
             });
-        } else {
-            if (!id == -1) {
-                player[Math.abs(id - 1)] = snapshot.val().player[Math.abs(id - 1)];
-            }
-        }
-    } else if (!id == -1) {
-        if (!score == snapshot.val().score) {
-            $("#score-wins").text(snapshot.val().score[id][0]);
-            $("#score-losses").text(snapshot.val().score[id][1]);
-            $("#score-ties").text(snapshot.val().score[id][2]);
-        }
-        if (!snapshot.val().chatmsg == "") {
-            var chatrec = snapshot.val().chatrec[id];
-            if (chatrec[id] == true) {
-                var chatDiv = document.getElementById("chat-text");
-                var newP = document.createElement('p');
-                newP.innerHTML = "<p>" + snapshot.val().chatmsg + "</p>";
-                chatDiv.appendChild(newP);
-                chatDiv.scrollTop = chatDiv.scrollHeight;
-                chatrec[id] = false;
-                database.ref().update({chatrec: chatrec});
-                if (chatrec[0] == false && chatrec[0] == false) {
-                    database.ref().update({chatmsg: ""});
-                }
-            }
         }
     }
 }, function(errorObject) {
-  console.log("Errors handled: " + errorObject.code);
+    console.log("Errors handled: " + errorObject.code);
 });
